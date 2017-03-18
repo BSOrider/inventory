@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
 });
 
 /* new saddle page */
-router.get('/new', function(req, res, next) {
+router.get('/po0ooRaJ2aih0rai4ahs', function(req, res, next) {
   console.log("sending new saddle...")
   res.render('new_saddle', { title: 'Express', dbInfo: [{type: "blab"}, {type: "bluh"}] });
 });
