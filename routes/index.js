@@ -28,16 +28,6 @@ router.post('/upload', function(req, res){
   // rename it to it's orignal name and delete original photo
   form.on('file', function(field, file) {
     fs.rename(file.path, path.join(form.uploadDir, file.name));
- //    var resultHandler = function(err) { 
-	//     if(err) {
-	//        console.log("unlink failed", err);
-	//     } else {
-	//        console.log("file deleted");
-	//     }
-	// }
-	// console.log("about to call unlink");
-	// fs.unlink(file.path, resultHandler);
-	// console.log("called unlink");
   });
   // log any errors that occur
   form.on('error', function(err) {
