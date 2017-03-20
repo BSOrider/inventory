@@ -6,13 +6,17 @@ var router = express.Router();
 
 /* home page */
 router.get('/', function(req, res, next) {
-  console.log("sending index...")
+  console.log("sending index...");
+  // DB call
+
+  // render page
   res.render('index', { title: 'Express', dbInfo: [{type: "blab"}, {type: "bluh"}] });
 });
 
 /* new saddle page */
 router.get('/po0ooRaJ2aih0rai4ahs', function(req, res, next) {
-  console.log("sending new saddle...")
+
+  // render page
   res.render('new_saddle', { title: 'Express', dbInfo: [{type: "blab"}, {type: "bluh"}] });
 });
 
