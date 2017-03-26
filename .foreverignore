@@ -1,0 +1,4 @@
+# templates
+*.hbs
+# static resources
+public

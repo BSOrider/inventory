@@ -10,14 +10,14 @@ router.get('/', function(req, res, next) {
   // DB call
 
   // render page
-  res.render('index', { title: 'Express', dbInfo: [{type: "blab"}, {type: "bluh"}] });
+  res.render('index', { title: 'SADDLES!!', dbInfo: [{type: "blab"}, {type: "bluh"}] });
 });
 
 /* new saddle page */
 router.get('/po0ooRaJ2aih0rai4ahs', function(req, res, next) {
 
   // render page
-  res.render('new_saddle', { title: 'Express', dbInfo: [{type: "blab"}, {type: "bluh"}] });
+  res.render('new_saddle', { title: 'SADDLES!!', dbInfo: [{type: "blab"}, {type: "bluh"}] });
 });
 
 /* upload image */
