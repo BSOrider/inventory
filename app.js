@@ -43,6 +43,4 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-console.log("Ready on port 3000");
-
 module.exports = app;

@@ -20,7 +20,7 @@ $('#upload-input').on('change', function(){
     }
 
     $.ajax({
-      url: '/upload',
+      url: '/savePic',
       type: 'POST',
       data: formData,
       processData: false,
