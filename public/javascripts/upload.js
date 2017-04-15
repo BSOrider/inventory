@@ -19,6 +19,10 @@ $('#upload-input').on('change', function(){
       formData.append('uploads[]', file, file.name);
     }
 
+    var password = $("#password").val();
+
+    console.log(formData);
+
     $.ajax({
       url: '/savePic',
       type: 'POST',
