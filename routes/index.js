@@ -43,12 +43,15 @@ router.get('/newSaddle', function(req, res) {
 
 /* save saddle data */
 router.post('/saveSaddle', function(req, res) {
+  console.log("SADDLE DATA BEING SAVED!");
   var mongoClient = mongodb.MongoClient;
   var mongoUrl = "mongodb://localhost:27017/inventory";
   mongoClient.connect(mongoUrl, function(error, db) {
     if (error) {
       console.log(error);
     } else {
+      console.log("should be form data here:");
+      console.log(req.body);
       var newSaddle = {
         name: req.body.name,
         price: req.body.price,
@@ -71,7 +74,10 @@ router.post('/saveSaddle', function(req, res) {
 
 /* save saddle image */
 router.post('/savePic', function(req, res) {
-
+  // console.log("SADDLE PIC BEING SAVED!");
+  // console.log(req);
+  // console.log("The password is:");
+  // console.log(req.password);
   var form = new formidable.IncomingForm();
   form.multiples = true;
   form.uploadDir = path.join(__dirname, '../public/images');

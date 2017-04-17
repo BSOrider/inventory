@@ -1,12 +1,12 @@
-$('.upload-btn').on('click', function (){
-    $('#upload-input').click();
+$('.upload-btn').on('click', function() {
+  $('#upload-input').click();
 });
 
-$('#upload-input').on('change', function(){
+$('#upload-input').on('change', function() {
 
   var files = $(this).get(0).files;
 
-  if (files.length > 0){
+  if (files.length > 0) {
     // create a FormData object which will be sent as the data payload in the
     // AJAX request
     var formData = new FormData();
@@ -21,36 +21,19 @@ $('#upload-input').on('change', function(){
 
     var password = $("#password").val();
 
-    console.log(formData);
-
     $.ajax({
       url: '/savePic',
       type: 'POST',
       data: formData,
       processData: false,
       contentType: false,
-      success: function(data){
-          console.log('upload successful!\n' + data);
+      success: function(data) {
+        alert('upload successful!\n' + data);
       },
-      xhr: function() {
-        // create an XMLHttpRequest
-        var xhr = new XMLHttpRequest();
-
-        // listen to the 'progress' event
-        xhr.upload.addEventListener('progress', function(evt) {
-
-          if (evt.lengthComputable) {
-            // calculate the percentage of upload completed
-            var percentComplete = evt.loaded / evt.total;
-            percentComplete = parseInt(percentComplete * 100);
-
-          }
-
-        }, false);
-
-        return xhr;
+      error: function(XMLHttpRequest, textStatus, errorThrown) {
+        $("div").hide();
+        $("body").append("HAHAHHAHA");
       }
     });
-
   }
 });
