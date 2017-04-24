@@ -22,11 +22,11 @@ $('#upload-input').on('change', function() {
     var password = $("#password").val();
 
     $.ajax({
-      url: '/savePic',
+      url: '/savePic?token=' + password,
       type: 'POST',
       data: formData,
       processData: false,
-      contentType: false,
+      contentType: '',
       success: function(data) {
         alert('upload successful!\n' + data);
       },
