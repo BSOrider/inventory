@@ -4,6 +4,8 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var mongodb = require('mongodb');
+var mongoClient = mongodb.MongoClient;
+var mongoUrl = "mongodb://localhost:27017/inventory";
 var fs = require('fs');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -19,11 +21,11 @@ app.set('view engine', 'hbs');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(logger('dev'));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 // app.use('/', index);
 
 /* home page */
@@ -57,11 +59,14 @@ app.get('/newSaddle', function(req, res) {
   res.render('new_saddle', { title: 'New saddle' });
 });
 
+/* for hackers */
+app.get('/fu', function(req, res) {
+  res.render('fu', {});
+});
+
 /* save saddle data */
 app.post('/saveSaddle', function(req, res) {
   console.log("SADDLE DATA BEING SAVED!");
-  var mongoClient = mongodb.MongoClient;
-  var mongoUrl = "mongodb://localhost:27017/inventory";
   mongoClient.connect(mongoUrl, function(error, db) {
     if (error) {
       console.log(error);
@@ -79,7 +84,6 @@ app.post('/saveSaddle', function(req, res) {
         if (err) {
           console.log(err);
         } else {
-          // res.redirect("/");
           res.send("Success!");
         }
         db.close();
@@ -90,20 +94,60 @@ app.post('/saveSaddle', function(req, res) {
 
 /* save saddle image */
 app.post('/savePic', function(req, res) {
-  console.log(req.body);
-  var form = new formidable.IncomingForm();
-  form.multiples = true;
-  form.uploadDir = path.join(__dirname, './public/images');
-  form.on('file', function(field, file) {
-    fs.rename(file.path, path.join(form.uploadDir, file.name));
+  var input = req.query.token;
+  mongoClient.connect(mongoUrl, function(error, db) {
+    if (error) {
+      console.log(error);
+    } else {
+      var collection = db.collection('validation');
+      collection.find({}).toArray(function(error, docs) {
+        var password = docs[0].password;
+        db.close();
+        if (error) {
+          console.log(error);
+        } else if (input == password) {
+          console.log("validated!");
+          // save image
+          var form = new formidable.IncomingForm();
+          form.multiples = true;
+          form.uploadDir = path.join(__dirname, './public/images');
+          form.on('file', function(field, file) {
+            fs.rename(file.path, path.join(form.uploadDir, file.name));
+          });
+          form.on('error', function(err) {
+            console.log('An error has occured: \n' + err);
+          });
+          form.on('end', function() {
+            res.end('success');
+          });
+          form.parse(req);
+        } else {
+          console.log("rejected!");
+          // res.redirect("/fu");
+          res.err("invalid token");
+        }
+      });
+    }
   });
-  form.on('error', function(err) {
-    console.log('An error has occured: \n' + err);
-  });
-  form.on('end', function() {
-    res.end('success');
-  });
-  form.parse(req);
+  // if (valid === true) {
+  //   console.log("!!!");
+  //   // save image
+  //   var form = new formidable.IncomingForm();
+  //   form.multiples = true;
+  //   form.uploadDir = path.join(__dirname, './public/images');
+  //   form.on('file', function(field, file) {
+  //     fs.rename(file.path, path.join(form.uploadDir, file.name));
+  //   });
+  //   form.on('error', function(err) {
+  //     console.log('An error has occured: \n' + err);
+  //   });
+  //   form.on('end', function() {
+  //     res.end('success');
+  //   });
+  //   form.parse(req);
+  // } else {
+  //   return false;
+  // }
 });
 
 // catch 404 and forward to error handler
