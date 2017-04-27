@@ -20,9 +20,12 @@ $('#upload-input').on('change', function() {
     }
 
     var password = $("#password").val();
+    var price = $("#price").val();
+    var width = $("#width").val();
+    var name = $("#name").val();
 
     $.ajax({
-      url: '/savePic?token=' + password,
+      url: '/savePic?token='+password+'&price='+price+'&width='+width+'&name='+name,
       type: 'POST',
       data: formData,
       processData: false,
@@ -31,6 +34,7 @@ $('#upload-input').on('change', function() {
         alert('upload successful!\n' + data);
       },
       error: function(XMLHttpRequest, textStatus, errorThrown) {
+        // $("body").append("HAHAHHAHA");
         window.location.href("fu");
       }
     });

@@ -131,7 +131,10 @@ app.post('/saveSaddle', function(req, res) {
 
 /* save saddle image */
 app.post('/savePic', function(req, res) {
-  var input = req.query.token;
+  var name = req.query.name;
+  var width = req.query.width;
+  var price = req.query.price;
+  var token = req.query.token;
   mongoClient.connect(mongoUrl, function(error, db) {
     if (error) {
       console.log(error);
@@ -142,7 +145,7 @@ app.post('/savePic', function(req, res) {
         db.close();
         if (error) {
           console.log(error);
-        } else if (input == password) {
+        } else if (token == password) {
           console.log("validated!");
           // save image
           var form = new formidable.IncomingForm();
@@ -160,13 +163,31 @@ app.post('/savePic', function(req, res) {
           form.parse(req);
         } else {
           console.log("rejected!");
-          // res.redirect("/fu");
-          res.err("invalid token");
+          res.redirect("/fu");
+          // res.err("invalid token");
         }
       });
     }
   });
 });
+
+// console.log("should be form data here:");
+//           console.log(req.body);
+//           var newSaddle = {
+//             name: req.body.name,
+//             price: req.body.price,
+//             width: req.body.width
+//           };
+//           var password = req.body.password;
+//           var collection = db.collection('saddles');
+//           collection.insert([newSaddle], function(err, result) {
+//             if (err) {
+//               console.log(err);
+//             } else {
+//               res.send("Success!");
+//             }
+//             db.close();
+//           });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
