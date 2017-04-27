@@ -31,7 +31,6 @@ $('#upload-input').on('change', function() {
         alert('upload successful!\n' + data);
       },
       error: function(XMLHttpRequest, textStatus, errorThrown) {
-        // $("body").append("HAHAHHAHA");
         window.location.href("fu");
       }
     });

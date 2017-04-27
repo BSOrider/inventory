@@ -71,25 +71,62 @@ app.post('/saveSaddle', function(req, res) {
     if (error) {
       console.log(error);
     } else {
-      console.log("should be form data here:");
-      console.log(req.body);
-      var newSaddle = {
-        name: req.body.name,
-        price: req.body.price,
-        width: req.body.width
-      };
-      var password = req.body.password;
-      var collection = db.collection('saddles');
-      collection.insert([newSaddle], function(err, result) {
-        if (err) {
-          console.log(err);
+      var collection = db.collection('validation');
+      collection.find({}).toArray(function(error, docs) {
+      	var input = req.body.password;
+      	console.log(input);
+        var password = docs[0].password;
+        // db.close();
+        if (error) {
+          console.log(error);
+        } else if (input == password) {
+          console.log("should be form data here:");
+          console.log(req.body);
+          var newSaddle = {
+            name: req.body.name,
+            price: req.body.price,
+            width: req.body.width
+          };
+          var password = req.body.password;
+          var collection = db.collection('saddles');
+          collection.insert([newSaddle], function(err, result) {
+            if (err) {
+              console.log(err);
+            } else {
+              res.send("Success!");
+            }
+            db.close();
+          });
         } else {
-          res.send("Success!");
+          console.log("rejected!");
+          res.redirect("/fu");
         }
-        db.close();
       });
     }
   });
+  // mongoClient.connect(mongoUrl, function(error, db) {
+  //   if (error) {
+  //     console.log(error);
+  //   } else {
+  //     console.log("should be form data here:");
+  //     console.log(req.body);
+  //     var newSaddle = {
+  //       name: req.body.name,
+  //       price: req.body.price,
+  //       width: req.body.width
+  //     };
+  //     var password = req.body.password;
+  //     var collection = db.collection('saddles');
+  //     collection.insert([newSaddle], function(err, result) {
+  //       if (err) {
+  //         console.log(err);
+  //       } else {
+  //         res.send("Success!");
+  //       }
+  //       db.close();
+  //     });
+  //   }
+  // });
 });
 
 /* save saddle image */
@@ -129,25 +166,6 @@ app.post('/savePic', function(req, res) {
       });
     }
   });
-  // if (valid === true) {
-  //   console.log("!!!");
-  //   // save image
-  //   var form = new formidable.IncomingForm();
-  //   form.multiples = true;
-  //   form.uploadDir = path.join(__dirname, './public/images');
-  //   form.on('file', function(field, file) {
-  //     fs.rename(file.path, path.join(form.uploadDir, file.name));
-  //   });
-  //   form.on('error', function(err) {
-  //     console.log('An error has occured: \n' + err);
-  //   });
-  //   form.on('end', function() {
-  //     res.end('success');
-  //   });
-  //   form.parse(req);
-  // } else {
-  //   return false;
-  // }
 });
 
 // catch 404 and forward to error handler
