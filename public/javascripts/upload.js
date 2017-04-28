@@ -25,7 +25,7 @@ $('#upload-input').on('change', function() {
     var name = $("#name").val();
 
     $.ajax({
-      url: '/savePic?token='+password+'&price='+price+'&width='+width+'&name='+name,
+      url: '/saveSaddle?token='+password+'&price='+price+'&width='+width+'&name='+name,
       type: 'POST',
       data: formData,
       processData: false,
