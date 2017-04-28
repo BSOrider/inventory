@@ -3,14 +3,14 @@ var formidable = require('formidable');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
-var mongodb = require('mongodb');
-var mongoClient = mongodb.MongoClient;
+var mongoClient = require('mongodb').MongoClient;
 var mongoUrl = "mongodb://localhost:27017/inventory";
 var fs = require('fs');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var app = express();
 var checkPwd = require('./lib/checkPassword.js');
+var db = require('./lib/db.js');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -31,8 +31,6 @@ app.use(bodyParser.json());
 /* home page */
 app.get('/', function(req, res) {
   console.log("sending index...");
-  var mongoClient = mongodb.MongoClient;
-  var mongoUrl = "mongodb://localhost:27017/inventory";
   mongoClient.connect(mongoUrl, function(error, db) {
     if (error) {
       console.log(error);
@@ -135,10 +133,11 @@ app.post('/savePic', function(req, res) {
   var width = req.query.width;
   var price = req.query.price;
   var token = req.query.token;
-  mongoClient.connect(mongoUrl, function(error, db) {
-    if (error) {
-      console.log(error);
-    } else {
+  // mongoClient.connect(mongoUrl, function(error, db) {
+  //   if (error) {
+  //     console.log(error);
+  //   } else {
+    // console.log(db);
       var collection = db.collection('validation');
       collection.find({}).toArray(function(error, docs) {
         var password = docs[0].password;
@@ -167,8 +166,8 @@ app.post('/savePic', function(req, res) {
           // res.err("invalid token");
         }
       });
-    }
-  });
+  //   }
+  // });
 });
 
 // console.log("should be form data here:");
