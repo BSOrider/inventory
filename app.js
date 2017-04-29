@@ -25,7 +25,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-// app.use('/', index);
 
 /* home page */
 app.get('/', function(req, res) {
@@ -55,12 +54,13 @@ app.get('/', function(req, res) {
 /* new saddle page */
 app.get('/newSaddle', function(req, res) {
   console.log(new Date());
+  console.log("sending new_saddle...");
   res.render('new_saddle', { title: 'New saddle' });
 });
 
 /* for hackers */
-app.get('/fu', function(req, res) {
-  res.render('fu', {});
+app.get('/stuffed', function(req, res) {
+  res.render('stuffed', {});
 });
 
 /* save saddle image */
@@ -104,7 +104,7 @@ app.post('/saveSaddle', function(req, res) {
         });
       } else {
         console.log("rejected!");
-        res.redirect("/fu");
+        res.send(500, {'error': "error"});
       }
     });
   });
