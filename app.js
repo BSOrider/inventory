@@ -15,8 +15,6 @@ var connection = require('./lib/db.js');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-// var index = require('./routes/index');
-
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
@@ -69,7 +67,8 @@ app.post('/saveSaddle', function(req, res) {
   var newSaddle = {
     name: req.query.name,
     price: req.query.price,
-    width: req.query.width
+    width: req.query.width,
+    width: req.query.padding
   };
   connection(function(db) {
     var collection = db.collection('validation');
