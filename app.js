@@ -30,12 +30,11 @@ app.get('/', function(req, res) {
     collection.find({}).toArray(function(error, saddles) {
       if (error) {
         console.log(error);
-      } else if (saddles.length) {
-        res.render('index', {
-          "index": saddles
-        });
       } else {
-        res.send("No saddles currently available!");
+        res.render('index', {
+          "title": "here r my saddlz",
+          "saddles": saddles
+        });
       }
     });
   });

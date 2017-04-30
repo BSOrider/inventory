@@ -1,4 +1,9 @@
-<h1>{{title}}</h1>
-<p>hey bla bla bla</p>
 <p>Welcome to {{title}}</p>
-<p>Saddlez: {{dbInfo}}</p>
+<p>Saddlez:</p>
+{{#each saddles}}
+	{{name}}
+	{{price}}
+	{{width}}
+	{{padding}}
+	<img src="images/{{image}}">
+{{/each}}
