@@ -22,10 +22,11 @@ $('#upload-input').on('change', function() {
     var password = $("#password").val();
     var price = $("#price").val();
     var width = $("#width").val();
+    var padding = $("#padding").val();
     var name = $("#name").val();
 
     $.ajax({
-      url: '/saveSaddle?token='+password+'&price='+price+'&width='+width+'&name='+name,
+      url: '/saveSaddle?token='+password+'&price='+price+'&width='+width+'&padding='+padding+'&name='+name,
       type: 'POST',
       data: formData,
       processData: false,
