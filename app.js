@@ -25,7 +25,6 @@ app.use(bodyParser.json());
 /* home page */
 app.get('/', function(req, res) {
   console.log(new Date());
-  console.log("sending index...");
   connection(function(db) {
     var collection = db.collection('saddles');
     collection.find({}).toArray(function(error, saddles) {
@@ -45,14 +44,12 @@ app.get('/', function(req, res) {
 /* new saddle page */
 app.get('/newSaddle', function(req, res) {
   console.log(new Date());
-  console.log("sending new_saddle...");
   res.render('new_saddle', { title: 'New saddle' });
 });
 
 /* for hackers */
 app.get('/stuffed', function(req, res) {
   console.log(new Date());
-  console.log("Somebody got stuffed!");
   res.render('stuffed', {});
 });
 
@@ -73,7 +70,7 @@ app.post('/saveSaddle', function(req, res) {
         console.log(error);
       } else if (token == password) {
         console.log("validated!");
-        // save image
+        // prep image name holder
         var imgName = null;
         var form = new formidable.IncomingForm();
         form.multiples = true;
@@ -103,10 +100,10 @@ app.post('/saveSaddle', function(req, res) {
           });
         });
         form.parse(req);
-
       } else {
         console.log("rejected!");
-        res.send(500, { 'error': "error" });
+        // once recieved causes redirecion to 'stuffed' page
+        res.send(500);
       }
     });
   });
@@ -114,6 +111,7 @@ app.post('/saveSaddle', function(req, res) {
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
+  console.log(new Date());
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
