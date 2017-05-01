@@ -60,7 +60,29 @@
 				<section class="carousel">
 					<div class="reel">
 
-						<article>
+					  {{#each saddles}}
+					    <article>
+						  <a href="#" class="image featured"><img src="saddlePics/{{image}}"></a>
+						  <header>
+						    <h3>
+						      <a href="#">{{name}}</a>
+						    </h3>
+						  </header>
+						  <ul>
+						    <li>
+						      <p>${{price}}</p>
+						    </li>
+						    <li>
+						      <p>Ancho: {{width}}mm</p>
+						    </li>
+						    <li>
+						      <p>Goma: {{padding}}mm</p>
+						    </li>
+						  </ul>
+						</article>
+				      {{/each}}
+
+						<!-- <article>
 							<a href="#" class="image featured"><img src="images/pic01.jpg" alt="" /></a>
 							<header>
 								<h3><a href="#">Pulvinar sagittis congue</a></h3>
@@ -138,7 +160,7 @@
 								<h3><a href="#">Varius magnis sollicitudin</a></h3>
 							</header>
 							<p>Commodo id natoque malesuada sollicitudin elit suscipit magna.</p>
-						</article>
+						</article> -->
 
 					</div>
 				</section>
