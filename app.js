@@ -32,6 +32,7 @@ app.get('/', function(req, res) {
         console.log(error);
       } else {
         res.render('index', {
+          "pageType": "homepage",
           "title": "here r my saddlz",
           "saddles": saddles
         });
