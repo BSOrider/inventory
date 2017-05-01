@@ -48,6 +48,26 @@ app.get('/', function(req, res) {
   });
 });
 
+/* saddles page */
+// app.get('/saddles', function(req, res) {
+//   console.log(new Date());
+//   connection(function(db) {
+//     var collection = db.collection('saddles');
+//     collection.find({}).toArray(function(error, saddles) {
+//       if (error) {
+//         console.log(error);
+//       } else {
+//         res.render('saddles', {
+//           "pageType": "no-sidebar",
+//           "title": "here r my saddlz",
+//           "saddles": saddles
+//         });
+//       }
+//     });
+//   });
+// });
+
+
 
 /* =================================================== */
 /* =================================================== */
