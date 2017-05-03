@@ -4,6 +4,7 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var fs = require('fs');
+var mongodb = require("mongodb");
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var app = express();
@@ -93,16 +94,64 @@ app.get('/saddles', function(req, res) {
 /* =================================================== */
 /* =================================================== */
 
+/* view saddles as JSON */
+app.get('/api/saddles', function(req, res) {
+  console.log(new Date());
+  connection(function(db) {
+    var collection = db.collection('saddles');
+    collection.find({}).toArray(function(error, saddles) {
+      if (error) {
+        console.log(error);
+      } else {
+        res.send({
+          saddles
+        });
+      }
+    });
+  });
+});
+
+/* delete saddle */
+/* Example: /api/saddles/delete?id=l0985uh0978y2&token=password */
+app.get('/api/saddles/delete', function(req, res) {
+  console.log(new Date());
+  var itemToDelete = req.query.id;
+  var token = req.query.token;
+  connection(function(db) {
+    var collection = db.collection('validation');
+    collection.find({}).toArray(function(error, docs) {
+      var password = docs[0].password;
+      if (error) {
+        console.log(error);
+      } else if (token == password) {
+        connection(function(db) {
+          var collection = db.collection('saddles');
+          collection.deleteOne({_id: new mongodb.ObjectID(itemToDelete)});
+          res.send({
+            "status": "saddle deleted"
+          })
+        });
+      } else {
+        console.log("rejected!");
+        // once recieved causes redirecion to 'stuffed' page
+        res.redirect("/stuffed");
+      }
+    });
+  });
+});
+
 /* new saddle page */
 app.get('/newSaddle', function(req, res) {
   console.log(new Date());
   res.render('new_saddle', { title: 'New saddle' });
 });
 
-/* for hackers */
+/* failed auth */
 app.get('/stuffed', function(req, res) {
   console.log(new Date());
-  res.render('stuffed', {});
+  res.send({
+    "status": "stuffed"
+  });
 });
 
 /* save saddle image */
