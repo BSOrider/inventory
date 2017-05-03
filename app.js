@@ -95,7 +95,7 @@ app.get('/saddles', function(req, res) {
 /* =================================================== */
 
 /* view saddles as JSON */
-app.get('/api/saddles', function(req, res) {
+app.get('/json/saddles', function(req, res) {
   console.log(new Date());
   connection(function(db) {
     var collection = db.collection('saddles');
@@ -112,8 +112,8 @@ app.get('/api/saddles', function(req, res) {
 });
 
 /* delete saddle */
-/* Example: /api/saddles/delete?id=l0985uh0978y2&token=password */
-app.get('/api/saddles/delete', function(req, res) {
+/* Example: /json/saddles/delete?id=l0985uh0978y2&token=password */
+app.get('/json/saddles/delete', function(req, res) {
   console.log(new Date());
   var itemToDelete = req.query.id;
   var token = req.query.token;
