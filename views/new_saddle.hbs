@@ -1,8 +1,14 @@
 <section id="banner">
   <header>
-    <h1>
-      Add a saddle
-    </h1>
+    <div>
+      <h2>Add a saddle</h2>
+      <br>
+      {{#each saddles}}
+        <span>Name: <b>{{name}}</b>, Id: <b>{{_id}}</b>, Image: <b>{{image}}</b> <button class="delete">delete</button></span>
+        <br>
+      {{/each}}
+      <br>
+    </div>
     <div class="panel-body">
       <input id="password" type="text" value="" placeholder="password">
       <input id="name" type="text" value="" placeholder="name">

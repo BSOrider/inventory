@@ -143,7 +143,16 @@ app.get('/json/saddles/delete', function(req, res) {
 /* new saddle page */
 app.get('/newSaddle', function(req, res) {
   console.log(new Date());
-  res.render('new_saddle', { title: 'New saddle' });
+  connection(function(db) {
+    var collection = db.collection('saddles');
+    collection.find({}).toArray(function(error, saddles) {
+      if (error) {
+        console.log(error);
+      } else {
+        res.render('new_saddle', { title: 'New saddle', saddles: saddles });
+      }
+    });
+  });
 });
 
 /* failed auth */
