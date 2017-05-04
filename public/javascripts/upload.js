@@ -28,10 +28,10 @@ $('#upload-input').on('change', function() {
       processData: false,
       contentType: '',
       success: function(data) {
-        alert('saddle added!');
+        window.location.reload();
       },
       error: function(XMLHttpRequest, textStatus, errorThrown) {
-        window.location.assign("stuffed");
+        alert('authentication failed!');
       }
     });
   }
@@ -50,10 +50,10 @@ $('.delete').on('click', function() {
     processData: false,
     contentType: '',
     success: function(data) {
-      alert('saddle deleted!');
+      window.location.reload();
     },
     error: function(XMLHttpRequest, textStatus, errorThrown) {
-      window.location.assign("stuffed");
+      alert('authentication failed!');
     }
   });
 });

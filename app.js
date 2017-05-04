@@ -23,7 +23,6 @@ app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-
 /* =================================================== */
 /* =================================================== */
 /* ================ 'PUBLIC' PAGES =================== */
@@ -87,15 +86,14 @@ app.get('/saddles', function(req, res) {
   });
 });
 
-
 /* =================================================== */
 /* =================================================== */
 /* ================ 'PRIVATE' PAGES ================== */
 /* =================================================== */
 /* =================================================== */
 
-/* view saddles as JSON */
-app.get('/json/saddles', function(req, res) {
+/* admin page */
+app.get('/admin', function(req, res) {
   console.log(new Date());
   connection(function(db) {
     var collection = db.collection('saddles');
@@ -103,17 +101,14 @@ app.get('/json/saddles', function(req, res) {
       if (error) {
         console.log(error);
       } else {
-        res.send({
-          saddles
-        });
+        res.render('admin', { title: 'Admin', saddles: saddles });
       }
     });
   });
 });
 
 /* delete saddle */
-/* Example: /json/saddles/delete?id=l0985uh0978y2&token=password */
-app.get('/json/saddles/delete', function(req, res) {
+app.post('/deleteSaddle', function(req, res) {
   console.log(new Date());
   var itemToDelete = req.query.id;
   var token = req.query.token;
@@ -127,39 +122,14 @@ app.get('/json/saddles/delete', function(req, res) {
         connection(function(db) {
           var collection = db.collection('saddles');
           collection.deleteOne({_id: new mongodb.ObjectID(itemToDelete)});
-          res.send({
-            "status": "saddle deleted"
-          })
+          res.end('success');
         });
       } else {
         console.log("rejected!");
         // once recieved causes redirecion to 'stuffed' page
-        res.redirect("/stuffed");
+        res.send(500);
       }
     });
-  });
-});
-
-/* admin page */
-app.get('/admin', function(req, res) {
-  console.log(new Date());
-  connection(function(db) {
-    var collection = db.collection('saddles');
-    collection.find({}).toArray(function(error, saddles) {
-      if (error) {
-        console.log(error);
-      } else {
-        res.render('new_saddle', { title: 'New saddle', saddles: saddles });
-      }
-    });
-  });
-});
-
-/* failed post req auth */
-app.get('/stuffed', function(req, res) {
-  console.log(new Date());
-  res.send({
-    "status": "stuffed"
   });
 });
 
