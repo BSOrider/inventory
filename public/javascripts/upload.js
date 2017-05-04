@@ -22,17 +22,38 @@ $('#upload-input').on('change', function() {
     var name = $("#name").val();
 
     $.ajax({
-      url: '/saveSaddle?token='+password+'&price='+price+'&width='+width+'&padding='+padding+'&name='+name,
+      url: '/saveSaddle?token=' + password + '&price=' + price + '&width=' + width + '&padding=' + padding + '&name=' + name,
       type: 'POST',
       data: formData,
       processData: false,
       contentType: '',
       success: function(data) {
-        alert('upload successful!\n' + data);
+        alert('saddle added!');
       },
       error: function(XMLHttpRequest, textStatus, errorThrown) {
         window.location.assign("stuffed");
       }
     });
   }
+});
+
+
+$('.delete').on('click', function() {
+
+  var password = $("#password").val();
+  var saddleId = $(this).prev().text();
+
+  $.ajax({
+    url: '/deleteSaddle?token=' + password + '&id=' + saddleId,
+    type: 'POST',
+    data: {},
+    processData: false,
+    contentType: '',
+    success: function(data) {
+      alert('saddle deleted!');
+    },
+    error: function(XMLHttpRequest, textStatus, errorThrown) {
+      window.location.assign("stuffed");
+    }
+  });
 });

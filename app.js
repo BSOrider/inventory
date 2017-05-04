@@ -140,8 +140,8 @@ app.get('/json/saddles/delete', function(req, res) {
   });
 });
 
-/* new saddle page */
-app.get('/newSaddle', function(req, res) {
+/* admin page */
+app.get('/admin', function(req, res) {
   console.log(new Date());
   connection(function(db) {
     var collection = db.collection('saddles');
@@ -155,7 +155,7 @@ app.get('/newSaddle', function(req, res) {
   });
 });
 
-/* failed auth */
+/* failed post req auth */
 app.get('/stuffed', function(req, res) {
   console.log(new Date());
   res.send({
@@ -165,6 +165,7 @@ app.get('/stuffed', function(req, res) {
 
 /* save saddle image */
 app.post('/saveSaddle', function(req, res) {
+  console.log("excuse me, what are you doing here?");
   var token = req.query.token;
   var newSaddle = {
     name: req.query.name,
