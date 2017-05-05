@@ -135,7 +135,7 @@ app.post('/deleteSaddle', function(req, res) {
 
 /* save saddle image */
 app.post('/saveSaddle', function(req, res) {
-  console.log("excuse me, what are you doing here?");
+  console.log(new Date());
   var token = req.query.token;
   var newSaddle = {
     name: req.query.name,
@@ -192,6 +192,7 @@ app.post('/saveSaddle', function(req, res) {
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
+  console.log("should be 404");
   console.log(new Date());
   var err = new Error('Not Found');
   err.status = 404;

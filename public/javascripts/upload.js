@@ -44,7 +44,7 @@ $('.delete').on('click', function() {
   var saddleId = $(this).prev().text();
 
   $.ajax({
-    url: '/deleteSaddle?token=' + password + '&id=' + saddleId,
+    url: '/deleteSaddle?token=' + password + '&id=' + saddleId + '&image=' + image,
     type: 'POST',
     data: {},
     processData: false,
