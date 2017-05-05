@@ -112,6 +112,7 @@ app.post('/deleteSaddle', function(req, res) {
   console.log(new Date());
   var itemToDelete = req.query.id;
   var token = req.query.token;
+  var image = req.query.image;
   connection(function(db) {
     var collection = db.collection('validation');
     collection.find({}).toArray(function(error, docs) {
@@ -121,13 +122,19 @@ app.post('/deleteSaddle', function(req, res) {
       } else if (token == password) {
         connection(function(db) {
           var collection = db.collection('saddles');
-          collection.deleteOne({_id: new mongodb.ObjectID(itemToDelete)});
-          res.end('success');
+          collection.deleteOne({ _id: new mongodb.ObjectID(itemToDelete) });
+          fs.unlink('./public/saddlePics/' + image, function(err) {
+            if (err) {
+              console.log(err);
+            } else {
+              res.end('success');
+            }
+          });
         });
       } else {
         console.log("rejected!");
         // once recieved causes redirecion to 'stuffed' page
-        res.send(500);
+        res.sendStatus(500);
       }
     });
   });
@@ -184,7 +191,7 @@ app.post('/saveSaddle', function(req, res) {
       } else {
         console.log("rejected!");
         // once recieved causes redirecion to 'stuffed' page
-        res.send(500);
+        res.sendStatus(500);
       }
     });
   });

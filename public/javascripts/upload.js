@@ -41,7 +41,8 @@ $('#upload-input').on('change', function() {
 $('.delete').on('click', function() {
 
   var password = $("#password").val();
-  var saddleId = $(this).prev().text();
+  var image = $(this).prev().text();
+  var saddleId = $(this).prev().prev().text();
 
   $.ajax({
     url: '/deleteSaddle?token=' + password + '&id=' + saddleId + '&image=' + image,
