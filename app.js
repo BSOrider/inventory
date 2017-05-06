@@ -51,20 +51,16 @@ app.get('/', function(req, res) {
 /* about page */
 app.get('/about', function(req, res) {
   console.log(new Date());
-  connection(function(db) {
-    var collection = db.collection('saddles');
-    collection.find({}).toArray(function(error, saddles) {
-      if (error) {
-        console.log(error);
-      } else {
-        res.render('about', {
-          "pageType": "no-sidebar",
-          "title": "here r my saddlz",
-          "saddles": saddles
-        });
-      }
-    });
-  });
+  // connection(function(db) {
+  //   var collection = db.collection('saddles');
+  //   collection.find({}).toArray(function(error, saddles) {
+  //     if (error) {
+  //       console.log(error);
+  //     } else {
+  res.render('about');
+  //     }
+  //   });
+  // });
 });
 
 /* saddles page */
