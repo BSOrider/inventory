@@ -32,35 +32,13 @@ app.use(bodyParser.json());
 /* home page */
 app.get('/', function(req, res) {
   console.log(new Date());
-  connection(function(db) {
-    var collection = db.collection('saddles');
-    collection.find({}).toArray(function(error, saddles) {
-      if (error) {
-        console.log(error);
-      } else {
-        res.render('index', {
-          "pageType": "homepage",
-          "title": "here r my saddlz",
-          "saddles": saddles
-        });
-      }
-    });
-  });
+  res.render('index');
 });
 
 /* about page */
 app.get('/about', function(req, res) {
   console.log(new Date());
-  // connection(function(db) {
-  //   var collection = db.collection('saddles');
-  //   collection.find({}).toArray(function(error, saddles) {
-  //     if (error) {
-  //       console.log(error);
-  //     } else {
   res.render('about');
-  //     }
-  //   });
-  // });
 });
 
 /* saddles page */
