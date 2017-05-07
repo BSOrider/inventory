@@ -32,13 +32,19 @@ app.use(bodyParser.json());
 /* home page */
 app.get('/', function(req, res) {
   console.log(new Date());
-  res.render('index');
+  res.render('index', {
+    "pageType": "homepage",
+    "title": "Sillinazo"
+  });
 });
 
 /* about page */
 app.get('/about', function(req, res) {
   console.log(new Date());
-  res.render('about');
+  res.render('about', {
+    "pageType": "no-sidebar",
+    "title": "Acerca de Sillinazo"
+  });
 });
 
 /* saddles page */
@@ -52,7 +58,7 @@ app.get('/saddles', function(req, res) {
       } else {
         res.render('saddles', {
           "pageType": "no-sidebar",
-          "title": "here r my saddlz",
+          "title": "Sillines",
           "saddles": saddles
         });
       }
