@@ -23,7 +23,6 @@ app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-
 /* =================================================== */
 /* =================================================== */
 /* ================ 'PUBLIC' PAGES =================== */
@@ -33,39 +32,13 @@ app.use(bodyParser.json());
 /* home page */
 app.get('/', function(req, res) {
   console.log(new Date());
-  connection(function(db) {
-    var collection = db.collection('saddles');
-    collection.find({}).toArray(function(error, saddles) {
-      if (error) {
-        console.log(error);
-      } else {
-        res.render('index', {
-          "pageType": "homepage",
-          "title": "here r my saddlz",
-          "saddles": saddles
-        });
-      }
-    });
-  });
+  res.render('index');
 });
 
 /* about page */
 app.get('/about', function(req, res) {
   console.log(new Date());
-  connection(function(db) {
-    var collection = db.collection('saddles');
-    collection.find({}).toArray(function(error, saddles) {
-      if (error) {
-        console.log(error);
-      } else {
-        res.render('about', {
-          "pageType": "no-sidebar",
-          "title": "here r my saddlz",
-          "saddles": saddles
-        });
-      }
-    });
-  });
+  res.render('about');
 });
 
 /* saddles page */
@@ -87,15 +60,14 @@ app.get('/saddles', function(req, res) {
   });
 });
 
-
 /* =================================================== */
 /* =================================================== */
 /* ================ 'PRIVATE' PAGES ================== */
 /* =================================================== */
 /* =================================================== */
 
-/* view saddles as JSON */
-app.get('/json/saddles', function(req, res) {
+/* admin page */
+app.get('/admin', function(req, res) {
   console.log(new Date());
   connection(function(db) {
     var collection = db.collection('saddles');
@@ -103,20 +75,18 @@ app.get('/json/saddles', function(req, res) {
       if (error) {
         console.log(error);
       } else {
-        res.send({
-          saddles
-        });
+        res.render('admin', { title: 'Admin', saddles: saddles });
       }
     });
   });
 });
 
 /* delete saddle */
-/* Example: /json/saddles/delete?id=l0985uh0978y2&token=password */
-app.get('/json/saddles/delete', function(req, res) {
+app.post('/deleteSaddle', function(req, res) {
   console.log(new Date());
   var itemToDelete = req.query.id;
   var token = req.query.token;
+  var image = req.query.image;
   connection(function(db) {
     var collection = db.collection('validation');
     collection.find({}).toArray(function(error, docs) {
@@ -126,45 +96,27 @@ app.get('/json/saddles/delete', function(req, res) {
       } else if (token == password) {
         connection(function(db) {
           var collection = db.collection('saddles');
-          collection.deleteOne({_id: new mongodb.ObjectID(itemToDelete)});
-          res.send({
-            "status": "saddle deleted"
-          })
+          collection.deleteOne({ _id: new mongodb.ObjectID(itemToDelete) });
+          fs.unlink('./public/saddlePics/' + image, function(err) {
+            if (err) {
+              console.log(err);
+            } else {
+              res.end('success');
+            }
+          });
         });
       } else {
         console.log("rejected!");
         // once recieved causes redirecion to 'stuffed' page
-        res.redirect("/stuffed");
+        res.sendStatus(500);
       }
     });
-  });
-});
-
-/* new saddle page */
-app.get('/newSaddle', function(req, res) {
-  console.log(new Date());
-  connection(function(db) {
-    var collection = db.collection('saddles');
-    collection.find({}).toArray(function(error, saddles) {
-      if (error) {
-        console.log(error);
-      } else {
-        res.render('new_saddle', { title: 'New saddle', saddles: saddles });
-      }
-    });
-  });
-});
-
-/* failed auth */
-app.get('/stuffed', function(req, res) {
-  console.log(new Date());
-  res.send({
-    "status": "stuffed"
   });
 });
 
 /* save saddle image */
 app.post('/saveSaddle', function(req, res) {
+  console.log(new Date());
   var token = req.query.token;
   var newSaddle = {
     name: req.query.name,
@@ -213,7 +165,7 @@ app.post('/saveSaddle', function(req, res) {
       } else {
         console.log("rejected!");
         // once recieved causes redirecion to 'stuffed' page
-        res.send(500);
+        res.sendStatus(500);
       }
     });
   });
@@ -221,6 +173,7 @@ app.post('/saveSaddle', function(req, res) {
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
+  console.log("should be 404");
   console.log(new Date());
   var err = new Error('Not Found');
   err.status = 404;

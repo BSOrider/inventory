@@ -1,16 +1,24 @@
 <section id="banner">
   <header>
     <div>
-      <h2>Add a saddle</h2>
+      <h2>Manage saddles</h2>
+      <br>
+      <input id="password" type="text" value="" placeholder="password">
+      <br>
+      <br>
+      <h3>Current Saddles</h3>
       <br>
       {{#each saddles}}
-        <span>Name: <b>{{name}}</b>, Id: <b>{{_id}}</b>, Image: <b>{{image}}</b> <button class="delete">delete</button></span>
-        <br>
+      <span>{{name}} - <span class="saddleId">{{_id}}</span> - <span class="image">{{image}}</span>
+        <button class="delete">delete</button>
+      </span>
+      <br>
       {{/each}}
+      <br>
+      <h3>Add a new saddle</h3>
       <br>
     </div>
     <div class="panel-body">
-      <input id="password" type="text" value="" placeholder="password">
       <input id="name" type="text" value="" placeholder="name">
       <input id="price" type="text" value="" placeholder="price (pesos)">
       <input id="width" type="text" value="" placeholder="width (mm)">
