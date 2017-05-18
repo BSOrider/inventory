@@ -137,7 +137,8 @@ app.post('/saveSaddle', function(req, res) {
     name: req.query.name,
     price: req.query.price,
     width: req.query.width,
-    padding: req.query.padding
+    padding: req.query.padding,
+    condition: req.query.condition
   };
   connection(function(db) {
     var collection = db.collection('validation');
