@@ -15,7 +15,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 // uncomment after placing your favicon in /public
-// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -42,6 +42,15 @@ app.get('/', function(req, res) {
 app.get('/about', function(req, res) {
   console.log(new Date());
   res.render('about', {
+    "pageType": "no-sidebar",
+    "title": "Acerca de Sillinazo"
+  });
+});
+
+/* analysis page */
+app.get('/analysis', function(req, res) {
+  console.log(new Date());
+  res.render('analysis', {
     "pageType": "no-sidebar",
     "title": "Acerca de Sillinazo"
   });
@@ -128,7 +137,8 @@ app.post('/saveSaddle', function(req, res) {
     name: req.query.name,
     price: req.query.price,
     width: req.query.width,
-    padding: req.query.padding
+    padding: req.query.padding,
+    condition: req.query.condition
   };
   connection(function(db) {
     var collection = db.collection('validation');
