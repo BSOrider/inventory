@@ -1,4 +1,4 @@
-const request = function(url, data){
+const request = function(url, data) {
   $.ajax({
     url: url,
     type: 'POST',
@@ -46,15 +46,10 @@ $('#upload-input').on('change', function() {
 
 
 $('.delete').on('click', function() {
-
   var password = $("#password").val();
   var image = $(this).prev().text();
   var saddleId = $(this).prev().prev().text();
-
   var url = '/deleteSaddle?token=' + password + '&id=' + saddleId + '&image=' + image;
   var data = {};
-
   request(url, data);
-
 });
-
