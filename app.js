@@ -90,7 +90,7 @@ app.get('/admin', function(req, res) {
       if (error) {
         console.log(error);
       } else {
-        res.render('admin', { title: 'Admin', saddles: saddles });
+        res.render('admin', { title: 'Manage saddles', saddles: saddles });
       }
     });
   });
