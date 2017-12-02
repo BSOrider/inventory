@@ -3,7 +3,7 @@
     <div>
       <h2>Manage saddles</h2>
       <br>
-      <input id="password" type="text" value="" placeholder="password">
+      <input id="password" type="password" value="" placeholder="password">
       <br>
       <br>
       <h3>Current Saddles</h3>
@@ -19,12 +19,17 @@
       <br>
     </div>
     <div class="panel-body">
-      <input id="name" type="text" value="" placeholder="name">
-      <input id="price" type="text" value="" placeholder="price (pesos)">
-      <input id="width" type="text" value="" placeholder="width (mm)">
-      <input id="padding" type="text" value="" placeholder="padding (mm)">
-      <input id="condition" type="text" value="" placeholder="condition">
-      <input id="upload-input" type="file" name="uploads[]" multiple="multiple">
+      <form method="post" enctype="multipart/form-data" action="/saveSaddle">
+        <input id="password" name="password" type="password" value="" placeholder="password">
+        <input id="name" name="name" type="text" value="" placeholder="name">
+        <input id="price" name="price" type="text" value="" placeholder="price (pesos)">
+        <input id="width" name="width" type="text" value="" placeholder="width (mm)">
+        <input id="padding" name="padding" type="text" value="" placeholder="padding (mm)">
+        <input id="condition" name="condition" type="text" value="" placeholder="condition">
+        <br>
+        <input id="upload-input" name="file" type="file">
+        <button type="submit">Save</button>
+      </form>
     </div>
   </header>
 </section>
